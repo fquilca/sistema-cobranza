@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cobranza de socios | Semana 13</title>
+<link rel="stylesheet" href="estilos.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script defer src="app.js"></script>
+</head>
+<body>
+<header><div><h1>Centro Comercial | Cobranza de Socios</h1><p>Aplicaciones Web · Semana 13 · JavaScript +
+Supabase</p></div><span id="identidad"></span></header>
+<main>
+<section id="panelAcceso" class="tarjeta acceso">
+<h2>Iniciar sesión</h2>
+<form id="formAcceso" class="campos">
+<label>Correo<input type="email" name="email" autocomplete="username" required
+placeholder="usuario@correo.com"></label>
+<label>Contraseña<input type="password" name="password" autocomplete="current-password"
+required></label>
+<button type="submit">Ingresar</button>
+</form>
+<p class="nota">El docente crea usuarios en Supabase → AuthenƟcaƟon → Users.</p>
+</section>
+<div id="aplicacion" hidden><div class="barra"><nav aria-label="Secciones"><button type="button" data-panel="socios"
+class="activo">Socios</button><button type="button" data-panel="cuotas">Cuotas</button><button type="button"
+data-panel="pagos">Pagos</button><button type="button" data-panel="reporte">Morosos</button></nav><button
+id="salir" class="secundario" type="button">Cerrar sesión</button></div>
+<section id="panel-socios" class="tarjeta panel">
+<h2>1. Registro de socios</h2>
+<form id="formSocio" class="campos">
+<input type="hidden" name="id"><label>Código<input name="codigo" maxlength="15" required
+placeholder="S001"></label><label>Nombre completo<input name="nombre" minlength="3"
+required></label><label>Local<input name="local" required placeholder="A-12"></label>
+<button type="submit">Guardar socio</button><button type="reset" class="secundario">Limpiar</button>
+</form>
+<div
+class="tabla"><table><thead><tr><th>Código</th><th>Nombre</th><th>Local</th><th>Acciones</th></tr></thead>
+<tbody id="listaSocios"></tbody></table></div>
+</section>
+<section id="panel-cuotas" class="tarjeta panel" hidden>
+<h2>2. Cuotas de mantenimiento</h2>
+<form id="formCuota" class="campos"><label>Socio<select name="socio_id" id="seleccionSocio"
+required></select></label><label>Período (AAAA-MM)<input name="periodo" type="month"
+required></label><label>Monto S/<input name="monto" type="number" min="0.01" step="0.01"
+required></label><button type="submit">Generar cuota</button></form>
+<div
+class="tabla"><table><thead><tr><th>Socio</th><th>Período</th><th>Cuota</th><th>Pagado</th><th>Saldo</th><
+/tr></thead><tbody id="listaCuotas"></tbody></table></div>
+</section>
+<section id="panel-pagos" class="tarjeta panel" hidden>
+<h2>3. Registrar pago parcial</h2>
+<form id="formPago" class="campos"><label>Cuota<select name="cuota_id" id="seleccionCuota"
+required></select></label><label>Abono S/<input type="number" name="monto" min="0.01" step="0.01"
+required></label><button type="submit">Registrar abono (RPC)</button></form>
+<p class="nota">El procedimiento almacenado valida el saldo y registra el pago en una transacción.</p>
+<div
+class="tabla"><table><thead><tr><th>Fecha</th><th>Socio</th><th>Período</th><th>Monto</th></tr></thead><tb
+ody id="listaPagos"></tbody></table></div>
+</section>
+<section id="panel-reporte" class="tarjeta panel" hidden><h2>4. Reporte de morosos</h2><p>Cuotas con saldo
+pendiente.</p><div id="resumen"></div><div
+class="tabla"><table><thead><tr><th>Socio</th><th>Local</th><th>Período</th><th>Saldo
+pendiente</th></tr></thead><tbody id="listaMorosos"></tbody></table></div></section>
+<button id="refrescar" type="button" class="secundario">Actualizar datos desde Supabase</button>
+</div>
+<p id="estado" role="status" aria-live="polite">Configura la URL y la clave publicable de Supabase en app.js.</p>
+</main>
+</body>
+</html>
